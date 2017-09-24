@@ -1,12 +1,11 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
+import Posts from './posts';
 
 class Home extends Component {
   render() {
     return (
       <div>
-        Welcome
+        <Posts />
       </div>
     );
   }
