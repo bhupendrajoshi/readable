@@ -47,11 +47,22 @@ function receiveCategories(categories) {
 export function fetchCategories() {
   return (dispatch) => {
     dispatch(requestCategories);
+    Api.getCategories().then(data => dispatch(receiveCategories(data.categories)));
+  }
+}
+
+export function selectPost({
+  selectedPost
+}) {
+  return (dispatch) => {
+    dispatch(requestCategories);
     Api.getCategories().then(categories => dispatch(receiveCategories(categories)));
   }
 }
 
-export function selectPost({ selectedPost }) {
+export function selectCategory({
+  selectedCategory
+}) {
   return (dispatch) => {
     dispatch(requestCategories);
     Api.getCategories().then(categories => dispatch(receiveCategories(categories)));
