@@ -1,12 +1,13 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
+import Posts from './posts';
+import Categories from './categories';
 
 class Home extends Component {
   render() {
     return (
       <div>
-        Welcome
+        <Posts />
+        <Categories />
       </div>
     );
   }
