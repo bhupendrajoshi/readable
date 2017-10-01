@@ -10,17 +10,19 @@ import Grid from 'material-ui/Grid';
 
 import { Link } from 'react-router';
 
-export default function PostMini({ post }) {
+import Moment from 'react-moment';
 
-  const postDate = new Date(post.timestamp);
-  const postDateAndTime = `${postDate.toDateString()} ${postDate.toTimeString()}`;
+export default function PostMini({ post }) {
 
   return (
     <div>
       <Card className="card" key={post.id}>
         <CardHeader
           title={post.title}
-          subheader={postDateAndTime}
+          subheader={(<Moment format="DD MMM YYYY HH:MM:SS">
+            {post.timestamp}
+          </Moment>
+          )}
         />
         <CardContent>
           <Grid container spacing={16} >
