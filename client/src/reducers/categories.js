@@ -14,7 +14,6 @@ export default function categories(state = initialCategoryState, action) {
     case RECEIVE_CATEGORIES:
       return { ...state, isRequestingCategories: false, categoriesLastUpdatedAt: action.receivedAt, categories: action.categories };
     case SET_SELECTED_CATEGORY:
-      console.log(action.selectedCategory);
       return { ...state, selectedCategory: action.selectedCategory }
     default:
       return state;
