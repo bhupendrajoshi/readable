@@ -30,7 +30,6 @@ const styles = theme => ({
     order: 1,
   },
   content: {
-    backgroundColor: theme.palette.background.default,
     width: '100%',
     padding: theme.spacing.unit * 3,
     height: 'calc(100% - 56px)',

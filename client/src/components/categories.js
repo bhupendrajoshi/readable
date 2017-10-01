@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import Button from 'material-ui/Button';
+import List, { ListItem } from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+
 import { fetchCategories, selectCategory } from '../actions/categories'
 
 class Categories extends Component {
@@ -13,25 +17,32 @@ class Categories extends Component {
 
     return (
       <div>
-        {categories && categories.length > 0 ? categories.map(category =>
-          (
-            selectedCategory && selectedCategory === category ?
-              (
-                <Button raised disabled color="accent"
-                  key={category.path}
-                  onClick={() => selectCategory(category)}>{category.name}
-                </Button>
-              )
-              :
-              (
-                <Button raised color="accent"
-                  key={category.path}
-                  onClick={() => selectCategory(category)}>{category.name}
-                </Button>
-              )
-          )
-        ) : (<span>No categories</span>)}
-        <Button raised color="accent" onClick={() => selectCategory(undefined)}>All categories</Button>
+        <List>
+          {categories && categories.length > 0 ? categories.map(category =>
+            (
+              selectedCategory && selectedCategory === category ?
+                (
+                  <ListItem key={category.path}>
+                    <Button raised disabled color="accent"
+                      onClick={() => selectCategory(category)}>{category.name}
+                    </Button>
+                  </ListItem>
+                )
+                :
+                (
+                  <ListItem key={category.path}>
+                    <Button raised color="accent"
+                      onClick={() => selectCategory(category)}>{category.name}
+                    </Button>
+                  </ListItem>
+                )
+            )
+          ) : (<span>No categories</span>)}
+          <Divider />
+          <ListItem>
+            <Button raised color="accent" onClick={() => selectCategory(undefined)}>All categories</Button>
+          </ListItem>
+        </List>
       </div>
     );
   }

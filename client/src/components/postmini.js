@@ -5,6 +5,9 @@ import Chip from 'material-ui/Chip';
 import Badge from 'material-ui/Badge';
 import ThumbUp from 'material-ui-icons/ThumbUp';
 import ThumbDown from 'material-ui-icons/ThumbDown';
+import Button from 'material-ui/Button';
+import Grid from 'material-ui/Grid';
+
 import { Link } from 'react-router';
 
 export default function PostMini({ post }) {
@@ -20,14 +23,22 @@ export default function PostMini({ post }) {
           subheader={postDateAndTime}
         />
         <CardContent>
+          <Grid container spacing={16} >
+            <Grid item xs={1}>
+              <Chip label={post.author} />
+            </Grid>
+            <Grid item xs={1}>
+              <Badge badgeContent={post.voteScore} color="accent">
+                {post.voteScore > 0 ? <ThumbUp /> : <ThumbDown />}
+              </Badge>
+            </Grid>
+          </Grid>
         </CardContent>
         <CardActions>
-          <Chip label={post.author} />
-          <Badge badgeContent={post.voteScore} color="accent">
-            {post.voteScore > 0 ? <ThumbUp /> : <ThumbDown />}
-          </Badge>
           <Link to={`post/${post.id}`}>
-            More...
+            <Button color="accent">
+              Read More
+            </Button>
           </Link>
         </CardActions>
       </Card>

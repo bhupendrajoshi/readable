@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Grid from 'material-ui/Grid';
+
 import { fetchPosts } from '../actions/posts'
 
 import Sort from './sort';
@@ -51,16 +53,26 @@ class Posts extends Component {
 
     return (
       <div>
-        <Sort member="Vote Score" value={this.state.voteScoreSortOrder} onChange={(value) => {
-          this.setState({ voteScoreSortOrder: value });
-        }} />
-        <Sort member="Timestamp" value={this.state.timestampSortOrder} onChange={(value) => {
-          this.setState({ timestampSortOrder: value });
-        }} />
+        <Grid container spacing={16} direction='column'>
+          <Grid item container spacing={16}>
+            <Grid item xs={2}>
+              <Sort member="Vote Score" value={this.state.voteScoreSortOrder} onChange={(value) => {
+                this.setState({ voteScoreSortOrder: value });
+              }} />
+            </Grid>
+            <Grid item xs={2}>
+              <Sort member="Timestamp" value={this.state.timestampSortOrder} onChange={(value) => {
+                this.setState({ timestampSortOrder: value });
+              }} />
+            </Grid>
+          </Grid>
 
-        {orderedPosts && orderedPosts.length > 0 ? orderedPosts.map(post => (
-          <PostMini key={post.id} post={post} />
-        )) : (<span>No posts</span>)}
+          <Grid item xs>
+            {orderedPosts && orderedPosts.length > 0 ? orderedPosts.map(post => (
+              <PostMini key={post.id} post={post} />
+            )) : (<span>No posts</span>)}
+          </Grid>
+        </Grid>
       </div>
     );
   }
