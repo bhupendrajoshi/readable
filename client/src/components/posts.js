@@ -1,22 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPosts, selectPost } from '../actions'
+import { fetchPosts } from '../actions/posts'
+
+import PostMini from './postmini';
 
 class Posts extends Component {
+  constructor() {
+    super();
+    this.state = {
+      voteScoreSortOrder: 'desc',
+      timestampSortOrder: 'none',
+    }
+  }
+
   componentDidMount() {
-    this.props.getPosts();
+    this.props.getPosts(this.props.selectedCategory);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedCategory !== this.props.selectedCategory) {
+      this.props.getPosts(nextProps.selectedCategory);
+    }
   }
 
   render() {
+
     return (
       <div>
-        <ul>
-          {this.props.posts ? this.props.posts.map(post => (
-            <li key={post.id}>
-              <h3>{post.title}</h3>
-            </li>
-          )) : ''}
-        </ul>
+        {this.props.posts && this.props.posts.length > 0 ? this.props.posts.map(post => (
+          <PostMini key={post.id} post={post} />
+        )) : (<span>No posts</span>)}
       </div>
     );
   }
@@ -24,15 +37,15 @@ class Posts extends Component {
 
 function mapStateToProps({ posts, categories }) {
   return {
-    posts: posts.posts,
-    categories: categories.categories
+    posts: posts.posts.filter(p => !p.deleted).sort(p => p.timestamp).reverse(),
+    categories: categories.categories,
+    selectedCategory: categories.selectedCategory
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPosts: () => dispatch(fetchPosts()),
-    selectPost: (data) => dispatch(selectPost(data))
+    getPosts: (data) => dispatch(fetchPosts(data))
   }
 }
 

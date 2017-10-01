@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import Posts from './posts';
 import Categories from './categories';
 
-class Home extends Component {
-  render() {
-    return (
-      <div>
-        <Posts />
-        <Categories />
-      </div>
-    );
-  }
+export default function Home() {
+  return (
+    <div>
+      <Categories />
+      <Posts />
+    </div>
+  );
 }
-
-export default Home;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCategories, selectCategory } from '../actions'
+import Button from 'material-ui/Button';
+import { fetchCategories, selectCategory } from '../actions/categories'
 
 class Categories extends Component {
   componentDidMount() {
@@ -8,15 +9,29 @@ class Categories extends Component {
   }
 
   render() {
+    const { categories, selectedCategory, selectCategory } = this.props;
+
     return (
       <div>
-        <ul>
-          {this.props.categories ? this.props.categories.map(category => (
-            <li key={category.name}>
-              <h3>{category.name}</h3>
-            </li>
-          )) : ''}
-        </ul>
+        {categories && categories.length > 0 ? categories.map(category =>
+          (
+            selectedCategory && selectedCategory === category ?
+              (
+                <Button raised disabled color="accent"
+                  key={category.path}
+                  onClick={() => selectCategory(category)}>{category.name}
+                </Button>
+              )
+              :
+              (
+                <Button raised color="accent"
+                  key={category.path}
+                  onClick={() => selectCategory(category)}>{category.name}
+                </Button>
+              )
+          )
+        ) : (<span>No categories</span>)}
+        <Button raised color="accent" onClick={() => selectCategory(undefined)}>All categories</Button>
       </div>
     );
   }
@@ -25,7 +40,7 @@ class Categories extends Component {
 function mapStateToProps({ posts, categories }) {
   return {
     categories: categories.categories,
-    selectCategory: categories.selectCategory
+    selectedCategory: categories.selectedCategory
   }
 }
 
