@@ -17,6 +17,7 @@ class Categories extends Component {
 
     return (
       <div>
+        <Divider />
         <List>
           {categories && categories.length > 0 ? categories.map(category =>
             (

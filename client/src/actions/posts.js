@@ -45,3 +45,21 @@ export function selectPost(postId) {
     Api.getPost(postId).then(post => dispatch(receivePost(post)));
   }
 }
+
+export function createPost(data) {
+  return (dispatch) => {
+    Api.addPost(data);
+  }
+}
+
+export function editPost(data) {
+  return (dispatch) => {
+    Api.editPost(data);
+  }
+}
+
+export function deletePost(postId) {
+  return (dispatch) => {
+    Api.deletePost(postId);
+  }
+}

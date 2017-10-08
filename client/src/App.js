@@ -6,11 +6,14 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 
 import { Route, Router, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 
 import PropTypes from 'prop-types';
 
 import Home from './components/home'
 import PostDetail from './components/postdetail';
+import NewPost from './components/newpost';
+import EditPost from './components/editpost';
 
 const styles = theme => ({
   root: {
@@ -48,9 +51,11 @@ function App(props) {
       <div className={classes.appFrame}>
         <AppBar className={classes.appBar}>
           <Toolbar>
-            <Typography type="title" color="inherit" noWrap>
-              Readable
-            </Typography>
+            <Link to='/'>
+              <Typography type="title" color="inherit" noWrap>
+                Readable
+              </Typography>
+            </Link>
           </Toolbar>
         </AppBar>
 
@@ -58,6 +63,8 @@ function App(props) {
           <Router history={browserHistory}>
             <Route exact path="/" component={Home} />
             <Route path="/post/:id" component={PostDetail} />
+            <Route path="/newpost" component={NewPost} />
+            <Route path="/editpost" component={EditPost} />
           </Router>
         </main>
       </div>

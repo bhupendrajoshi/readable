@@ -29,3 +29,27 @@ export const getPost = (postId) =>
   fetch(`${api}/posts/${postId}`, { headers })
     .then(res => res.json())
     .then(data => data)
+
+export const addPost = (post) =>
+  fetch(`${api}/posts`, {
+    method: "POST",
+    body: JSON.stringify(post),
+    headers: { ...headers, 'Content-Type': 'application/json' }
+  })
+    .then(res => res.json())
+    .then(data => data)
+
+export const editPost = (post) =>
+  fetch(`${api}/posts/${post.id}`, {
+    method: "PUT",
+    body: JSON.stringify(post),
+    headers: { ...headers, 'Content-Type': 'application/json' }
+  })
+    .then(res => res.json())
+    .then(data => data)
+
+export const deletePost = (postId) =>
+  fetch(`${api}/posts/${postId}`, {
+    method: "DELETE",
+    headers
+  })
