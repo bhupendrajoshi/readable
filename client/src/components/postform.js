@@ -8,8 +8,7 @@ import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-
-import AutosuggestDropdown from './controls/autosuggest';
+import { MenuItem } from 'material-ui/Menu';
 
 import uniqueString from 'unique-string';
 
@@ -24,6 +23,9 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     width: '100%',
     height: '400px',
+  },
+  menu: {
+    width: 200,
   }
 });
 
@@ -88,7 +90,7 @@ class PostForm extends Component {
 
             <Grid item xs={12}>
               <TextField
-                id="multiline-flexible"
+                id="body"
                 label="Body"
                 required
                 multiline
@@ -100,12 +102,26 @@ class PostForm extends Component {
             </Grid>
 
             <Grid item>
-              <AutosuggestDropdown
+              <TextField
+                id="category"
+                select
                 required
-                suggestions={categories.map(c => c.name)}
-                initialValue={this.state.category}
-                setSelectedSuggestion={(v) => this.setState({ 'category': v })}
-                placeholder='Search an existing category or add new' />
+                label="Category"
+                className={classes.textField}
+                value={this.state.category}
+                onChange={this.handleChange('category')}
+                SelectProps={{
+                  MenuProps: { className: classes.menu },
+                }}
+                helperText="Please select post category"
+                margin="normal">
+
+                {categories.map(option => (
+                  <MenuItem key={option.path} value={option.name}>
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
 
             <Grid item>
