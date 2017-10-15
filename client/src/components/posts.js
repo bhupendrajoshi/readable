@@ -28,23 +28,32 @@ class Posts extends Component {
   }
 
   OrderPosts(posts) {
-    if (posts && posts.length > 0) {
+    var orderedPosts = [...posts];
+    if (orderedPosts && orderedPosts.length > 0) {
       if (this.state.voteScoreSortOrder === 'Ascending') {
-        posts = posts.sort(p => p.voteScore);
+        orderedPosts = orderedPosts.sort(this.comparePostVoteScores);
       }
       else if (this.state.voteScoreSortOrder === 'Descending') {
-        posts = posts.sort(p => p.voteScore).reverse();
+        orderedPosts = orderedPosts.sort(this.comparePostVoteScores).reverse();
       }
 
       if (this.state.timestampSortOrder === 'Ascending') {
-        posts = posts.sort(p => p.timestamp);
+        orderedPosts = orderedPosts.sort(this.comparePostTimestamps);
       }
       else if (this.state.timestampSortOrder === 'Descending') {
-        posts = posts.sort(p => p.timestamp).reverse();
+        orderedPosts = orderedPosts.sort(this.comparePostTimestamps).reverse();
       }
     }
 
-    return posts;
+    return orderedPosts;
+  }
+
+  comparePostVoteScores(postA, postB) {
+    return postA.voteScore - postB.voteScore;
+  }
+
+  comparePostTimestamps(postA, postB) {
+    return postA.timestamp - postB.timestamp;
   }
 
   render() {

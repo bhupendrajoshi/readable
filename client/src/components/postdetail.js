@@ -15,16 +15,18 @@ import Moment from 'react-moment';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 
-import { selectPost } from '../actions/posts';
-import { deletePost } from '../actions/posts';
+import { selectPost, deletePost, voteUpPost, voteDownPost, fetchPostComments } from '../actions/posts';
+
+import Comments from './comments';
 
 class PostDetail extends Component {
   componentDidMount() {
     this.props.selectPost(this.props.params.id);
+    this.props.getPostComments(this.props.params.id);
   }
 
   render() {
-    const { post, deletePost } = this.props;
+    const { post, deletePost, voteUpPost, voteDownPost, comments } = this.props;
 
     return (
       <div>
@@ -62,15 +64,18 @@ class PostDetail extends Component {
                       <span>{post.voteScore}</span>
                     </Grid>
                     <Grid item xs={1}>
-                      <IconButton color="accent">
+                      <IconButton color="accent" onClick={() => voteUpPost(post.id)}>
                         <ThumbUp />
                       </IconButton>
                     </Grid>
                     <Grid item xs={1}>
-                      <IconButton color="accent">
+                      <IconButton color="accent" onClick={() => voteDownPost(post.id)}>
                         <ThumbDown />
                       </IconButton>
                     </Grid>
+                  </Grid>
+                  <Grid item>
+                    <Comments comments={comments} />
                   </Grid>
                 </Grid>
                 <Grid item xs={2} />
@@ -90,13 +95,17 @@ class PostDetail extends Component {
 function mapStateToProps({ posts, categories }) {
   return {
     post: posts.selectedPost,
+    comments: posts.selectedPostComments.filter(c => !c.deleted)
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     selectPost: (data) => dispatch(selectPost(data)),
-    deletePost: (postId) => dispatch(deletePost(postId))
+    getPostComments: (postId) => dispatch(fetchPostComments(postId)),
+    deletePost: (postId) => dispatch(deletePost(postId)),
+    voteUpPost: (postId) => dispatch(voteUpPost(postId)),
+    voteDownPost: (postId) => dispatch(voteDownPost(postId))
   }
 }
 

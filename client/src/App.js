@@ -1,19 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import { Link } from 'react-router';
 
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-
-import { Route, Router, browserHistory } from 'react-router';
-import { Link } from 'react-router';
-
-import PropTypes from 'prop-types';
-
-import Home from './components/home'
-import PostDetail from './components/postdetail';
-import NewPost from './components/newpost';
-import EditPost from './components/editpost';
 
 const styles = theme => ({
   root: {
@@ -44,32 +37,29 @@ const styles = theme => ({
   }
 });
 
-function App(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <div className={classes.appFrame}>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <Link to='/'>
+class App extends Component {
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <div className={classes.appFrame}>
+          <AppBar className={classes.appBar}>
+            <Toolbar>
               <Typography type="title" color="inherit" noWrap>
-                Readable
+                <Link to='/posts'>
+                  Readable
+                </Link>
               </Typography>
-            </Link>
-          </Toolbar>
-        </AppBar>
+            </Toolbar>
+          </AppBar>
 
-        <main className={classes.content}>
-          <Router history={browserHistory}>
-            <Route exact path="/" component={Home} />
-            <Route path="/post/:id" component={PostDetail} />
-            <Route path="/newpost" component={NewPost} />
-            <Route path="/editpost" component={EditPost} />
-          </Router>
-        </main>
+          <main className={classes.content}>
+            {this.props.children}
+          </main>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 App.propTypes = {

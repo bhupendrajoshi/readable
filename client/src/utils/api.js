@@ -53,3 +53,27 @@ export const deletePost = (postId) =>
     method: "DELETE",
     headers
   })
+
+export const voteUpPost = (postId) =>
+  fetch(`${api}/posts/${postId}`, {
+    method: "POST",
+    body: JSON.stringify({ option: 'upVote' }),
+    headers: { ...headers, 'Content-Type': 'application/json' }
+  })
+    .then(res => res.json())
+    .then(data => data)
+
+export const voteDownPost = (postId) =>
+  fetch(`${api}/posts/${postId}`, {
+    method: "POST",
+    body: JSON.stringify({ option: 'downVote' }),
+    headers: { ...headers, 'Content-Type': 'application/json' }
+  })
+    .then(res => res.json())
+    .then(data => data)
+
+
+export const getPostComments = (postId) =>
+  fetch(`${api}/posts/${postId}/comments`, { headers })
+    .then(res => res.json())
+    .then(data => data)
