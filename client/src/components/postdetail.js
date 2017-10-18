@@ -61,7 +61,7 @@ class PostDetail extends Component {
                   </Grid>
                   <Grid item container spacing={16} >
                     <Grid item xs={1}>
-                      <span>{post.voteScore}</span>
+                      <Chip label={post.voteScore} />
                     </Grid>
                     <Grid item xs={1}>
                       <IconButton color="accent" onClick={() => voteUpPost(post.id)}>

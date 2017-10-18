@@ -91,3 +91,21 @@ export function fetchPostComments(postId) {
     Api.getPostComments(postId).then(comments => dispatch(receivePostComments(comments)));
   }
 }
+
+export function voteUpComment(commentId) {
+  return (dispatch) => {
+    Api.voteUpComment(commentId).then(comments => dispatch(receivePostComments(comments)));
+  }
+}
+
+export function voteDownComment(commentId) {
+  return (dispatch) => {
+    Api.voteDownComment(commentId).then(comments => dispatch(receivePostComments(comments)));
+  }
+}
+
+export function deleteComment(commentId) {
+  return (dispatch) => {
+    Api.deleteComment(commentId).then(comments => dispatch(receivePostComments(comments)));
+  }
+}

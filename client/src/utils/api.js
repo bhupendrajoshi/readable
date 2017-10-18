@@ -72,8 +72,31 @@ export const voteDownPost = (postId) =>
     .then(res => res.json())
     .then(data => data)
 
-
 export const getPostComments = (postId) =>
   fetch(`${api}/posts/${postId}/comments`, { headers })
     .then(res => res.json())
     .then(data => data)
+
+export const voteUpComment = (commentId) =>
+  fetch(`${api}/comments/${commentId}`, {
+    method: "POST",
+    body: JSON.stringify({ option: 'upVote' }),
+    headers: { ...headers, 'Content-Type': 'application/json' }
+  })
+    .then(res => res.json())
+    .then(data => data)
+
+export const voteDownComment = (commentId) =>
+  fetch(`${api}/comments/${commentId}`, {
+    method: "POST",
+    body: JSON.stringify({ option: 'downVote' }),
+    headers: { ...headers, 'Content-Type': 'application/json' }
+  })
+    .then(res => res.json())
+    .then(data => data)
+
+export const deleteComment = (commentId) =>
+  fetch(`${api}/comments/${commentId}`, {
+    method: "DELETE",
+    headers
+  })
