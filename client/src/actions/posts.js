@@ -6,8 +6,6 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const REQUEST_POST = 'REQUEST_POST';
 export const RECEIVE_POST = 'RECEIVE_POST';
 
-export const RECEIVE_POST_COMMENTS = 'RECEIVE_POST_COMMENTS';
-
 function requestPosts() {
   return {
     type: REQUEST_POSTS
@@ -78,34 +76,3 @@ export function voteDownPost(postId) {
   }
 }
 
-
-function receivePostComments(comments) {
-  return {
-    type: RECEIVE_POST_COMMENTS,
-    comments: comments
-  }
-}
-
-export function fetchPostComments(postId) {
-  return (dispatch) => {
-    Api.getPostComments(postId).then(comments => dispatch(receivePostComments(comments)));
-  }
-}
-
-export function voteUpComment(commentId) {
-  return (dispatch) => {
-    Api.voteUpComment(commentId).then(comments => dispatch(receivePostComments(comments)));
-  }
-}
-
-export function voteDownComment(commentId) {
-  return (dispatch) => {
-    Api.voteDownComment(commentId).then(comments => dispatch(receivePostComments(comments)));
-  }
-}
-
-export function deleteComment(commentId) {
-  return (dispatch) => {
-    Api.deleteComment(commentId).then(comments => dispatch(receivePostComments(comments)));
-  }
-}

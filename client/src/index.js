@@ -13,9 +13,9 @@ import { Route, Router, browserHistory, IndexRoute } from 'react-router';
 import './index.css';
 import App from './App';
 import Home from './components/home'
-import PostDetail from './components/postdetail';
-import NewPost from './components/newpost';
-import EditPost from './components/editpost';
+import PostDetail from './components/posts/postdetail';
+import NewPost from './components/posts/newpost';
+import EditPost from './components/posts/editpost';
 
 import registerServiceWorker from './registerServiceWorker';
 

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
@@ -17,7 +16,9 @@ import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import DeleteIcon from 'material-ui-icons/Delete';
 import { withStyles } from 'material-ui/styles';
 
-import { voteUpComment, voteDownComment, deleteComment } from '../actions/posts';
+import { voteUpComment, voteDownComment, editComment, deleteComment } from '../../actions/comments';
+
+import CommentForm from './commentform';
 
 const styles = theme => ({
   textField: {
@@ -44,7 +45,7 @@ class CommentDetail extends Component {
     }
   }
   render() {
-    const { classes, comment, voteUpComment, voteDownComment, deleteComment } = this.props;
+    const { comment, voteUpComment, voteDownComment, editComment, deleteComment } = this.props;
     return (
       <div>
 
@@ -86,14 +87,12 @@ class CommentDetail extends Component {
 
           )
           : (
-            <TextField
-              id="body"
-              label="Body"
-              required
-              multiline
-              rowsMax="5"
-              value={comment.body}
-              className={classes.multilineTextField}
+            <CommentForm
+              comment={comment}
+              updatedComment={comment => {
+                editComment(comment);
+                this.setState({ editing: false });
+              }}
             />
           )}
       </div>
@@ -103,7 +102,6 @@ class CommentDetail extends Component {
 
 
 CommentDetail.propTypes = {
-  classes: PropTypes.object.isRequired,
   comment: PropTypes.object.isRequired
 };
 
@@ -111,6 +109,7 @@ function mapDispatchToProps(dispatch) {
   return {
     voteUpComment: (commentId) => dispatch(voteUpComment(commentId)),
     voteDownComment: (commentId) => dispatch(voteDownComment(commentId)),
+    editComment: (comment) => dispatch(editComment(comment)),
     deleteComment: (commentId) => dispatch(deleteComment(commentId))
   }
 }

@@ -5,8 +5,8 @@ import Grid from 'material-ui/Grid';
 
 import { fetchPosts } from '../actions/posts'
 
-import Sort from './sort';
-import PostMini from './postmini';
+import Sort from './controls/sort';
+import PostMini from './posts/postmini';
 
 class Posts extends Component {
   constructor() {

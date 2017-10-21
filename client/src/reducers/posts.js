@@ -1,11 +1,10 @@
-import { REQUEST_POSTS, RECEIVE_POSTS, RECEIVE_POST, RECEIVE_POST_COMMENTS } from '../actions/posts';
+import { REQUEST_POSTS, RECEIVE_POSTS, RECEIVE_POST } from '../actions/posts';
 
 const initialPostState = {
   posts: [],
   isRequestingPosts: false,
   postsLastUpdatedAt: undefined,
-  selectedPost: undefined,
-  selectedPostComments: []
+  selectedPost: undefined
 }
 
 export default function posts(state = initialPostState, action) {
@@ -16,8 +15,6 @@ export default function posts(state = initialPostState, action) {
       return { ...state, isRequestingPosts: false, postsLastUpdatedAt: action.receivedAt, posts: action.posts };
     case RECEIVE_POST:
       return { ...state, selectedPost: action.post };
-    case RECEIVE_POST_COMMENTS:
-      return { ...state, selectedPostComments: action.comments };
     default:
       return state;
   }

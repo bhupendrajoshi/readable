@@ -15,9 +15,10 @@ import Moment from 'react-moment';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 
-import { selectPost, deletePost, voteUpPost, voteDownPost, fetchPostComments } from '../actions/posts';
+import { selectPost, deletePost, voteUpPost, voteDownPost } from '../../actions/posts';
+import { fetchPostComments, addComment } from '../../actions/comments';
 
-import Comments from './comments';
+import Comments from '../comments/comments';
 
 class PostDetail extends Component {
   componentDidMount() {
@@ -26,7 +27,7 @@ class PostDetail extends Component {
   }
 
   render() {
-    const { post, deletePost, voteUpPost, voteDownPost, comments } = this.props;
+    const { post, deletePost, voteUpPost, voteDownPost, comments, addComment } = this.props;
 
     return (
       <div>
@@ -75,7 +76,7 @@ class PostDetail extends Component {
                     </Grid>
                   </Grid>
                   <Grid item>
-                    <Comments comments={comments} />
+                    <Comments comments={comments} addComment={comment => addComment({ ...comment, parentId: post.id })} />
                   </Grid>
                 </Grid>
                 <Grid item xs={2} />
@@ -92,10 +93,10 @@ class PostDetail extends Component {
   }
 }
 
-function mapStateToProps({ posts, categories }) {
+function mapStateToProps({ posts, comments }) {
   return {
     post: posts.selectedPost,
-    comments: posts.selectedPostComments.filter(c => !c.deleted)
+    comments: comments.comments.filter(c => !c.deleted)
   }
 }
 
@@ -103,6 +104,7 @@ function mapDispatchToProps(dispatch) {
   return {
     selectPost: (data) => dispatch(selectPost(data)),
     getPostComments: (postId) => dispatch(fetchPostComments(postId)),
+    addComment: (comment) => dispatch(addComment(comment)),
     deletePost: (postId) => dispatch(deletePost(postId)),
     voteUpPost: (postId) => dispatch(voteUpPost(postId)),
     voteDownPost: (postId) => dispatch(voteDownPost(postId))

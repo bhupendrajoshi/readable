@@ -53,6 +53,8 @@ export const deletePost = (postId) =>
     method: "DELETE",
     headers
   })
+    .then(res => res.json())
+    .then(data => data)
 
 export const voteUpPost = (postId) =>
   fetch(`${api}/posts/${postId}`, {
@@ -95,8 +97,28 @@ export const voteDownComment = (commentId) =>
     .then(res => res.json())
     .then(data => data)
 
+export const addComment = (comment) =>
+  fetch(`${api}/comments`, {
+    method: "POST",
+    body: JSON.stringify(comment),
+    headers: { ...headers, 'Content-Type': 'application/json' }
+  })
+    .then(res => res.json())
+    .then(data => data)
+
+export const editComment = (comment) =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: "PUT",
+    body: JSON.stringify(comment),
+    headers: { ...headers, 'Content-Type': 'application/json' }
+  })
+    .then(res => res.json())
+    .then(data => data)
+
 export const deleteComment = (commentId) =>
   fetch(`${api}/comments/${commentId}`, {
     method: "DELETE",
     headers
   })
+    .then(res => res.json())
+    .then(data => data)
