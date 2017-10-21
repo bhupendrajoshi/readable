@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 
 import PostForm from './postform';
 
-import { editPost } from '../actions/posts';
+import { editPost } from '../../actions/posts';
 
 const EditPost = props => {
   return (

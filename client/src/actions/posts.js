@@ -63,3 +63,16 @@ export function deletePost(postId) {
     Api.deletePost(postId);
   }
 }
+
+export function voteUpPost(postId) {
+  return (dispatch) => {
+    Api.voteUpPost(postId).then(post => dispatch(receivePost(post)));
+  }
+}
+
+export function voteDownPost(postId) {
+  return (dispatch) => {
+    Api.voteDownPost(postId).then(post => dispatch(receivePost(post)));
+  }
+}
+

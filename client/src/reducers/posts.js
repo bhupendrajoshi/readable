@@ -4,7 +4,7 @@ const initialPostState = {
   posts: [],
   isRequestingPosts: false,
   postsLastUpdatedAt: undefined,
-  selectedPost: undefined,
+  selectedPost: undefined
 }
 
 export default function posts(state = initialPostState, action) {

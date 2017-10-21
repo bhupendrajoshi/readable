@@ -15,16 +15,19 @@ import Moment from 'react-moment';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 
-import { selectPost } from '../actions/posts';
-import { deletePost } from '../actions/posts';
+import { selectPost, deletePost, voteUpPost, voteDownPost } from '../../actions/posts';
+import { fetchPostComments, addComment } from '../../actions/comments';
+
+import Comments from '../comments/comments';
 
 class PostDetail extends Component {
   componentDidMount() {
     this.props.selectPost(this.props.params.id);
+    this.props.getPostComments(this.props.params.id);
   }
 
   render() {
-    const { post, deletePost } = this.props;
+    const { post, deletePost, voteUpPost, voteDownPost, comments, addComment } = this.props;
 
     return (
       <div>
@@ -59,18 +62,21 @@ class PostDetail extends Component {
                   </Grid>
                   <Grid item container spacing={16} >
                     <Grid item xs={1}>
-                      <span>{post.voteScore}</span>
+                      <Chip label={post.voteScore} />
                     </Grid>
                     <Grid item xs={1}>
-                      <IconButton color="accent">
+                      <IconButton color="accent" onClick={() => voteUpPost(post.id)}>
                         <ThumbUp />
                       </IconButton>
                     </Grid>
                     <Grid item xs={1}>
-                      <IconButton color="accent">
+                      <IconButton color="accent" onClick={() => voteDownPost(post.id)}>
                         <ThumbDown />
                       </IconButton>
                     </Grid>
+                  </Grid>
+                  <Grid item>
+                    <Comments comments={comments} addComment={comment => addComment({ ...comment, parentId: post.id })} />
                   </Grid>
                 </Grid>
                 <Grid item xs={2} />
@@ -87,16 +93,21 @@ class PostDetail extends Component {
   }
 }
 
-function mapStateToProps({ posts, categories }) {
+function mapStateToProps({ posts, comments }) {
   return {
     post: posts.selectedPost,
+    comments: comments.comments.filter(c => !c.deleted)
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     selectPost: (data) => dispatch(selectPost(data)),
-    deletePost: (postId) => dispatch(deletePost(postId))
+    getPostComments: (postId) => dispatch(fetchPostComments(postId)),
+    addComment: (comment) => dispatch(addComment(comment)),
+    deletePost: (postId) => dispatch(deletePost(postId)),
+    voteUpPost: (postId) => dispatch(voteUpPost(postId)),
+    voteDownPost: (postId) => dispatch(voteDownPost(postId))
   }
 }
 

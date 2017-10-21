@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 
 import PostForm from './postform'
 
-import { createPost } from '../actions/posts';
+import { createPost } from '../../actions/posts';
 
 const NewPost = props => {
   return (
