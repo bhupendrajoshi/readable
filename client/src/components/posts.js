@@ -28,7 +28,7 @@ class Posts extends Component {
   }
 
   OrderPosts(posts) {
-    var orderedPosts = [...posts];
+    let orderedPosts = [...posts];
     if (orderedPosts && orderedPosts.length > 0) {
       if (this.state.voteScoreSortOrder === 'Ascending') {
         orderedPosts = orderedPosts.sort(this.comparePostVoteScores);
@@ -57,8 +57,8 @@ class Posts extends Component {
   }
 
   render() {
-    var { posts } = this.props;
-    var orderedPosts = this.OrderPosts(posts);
+    let { posts } = this.props;
+    let orderedPosts = this.OrderPosts(posts);
 
     return (
       <div>

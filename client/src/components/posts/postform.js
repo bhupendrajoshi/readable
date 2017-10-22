@@ -59,6 +59,10 @@ class PostForm extends Component {
     this.props.updatedForm({ ...this.state, id: id, timestamp: Date.now() });
   }
 
+  isValid() {
+    return !(this.state.category === undefined || this.state.category.length === 0)
+  }
+
   render() {
     const { classes, categories } = this.props;
 
@@ -104,8 +108,8 @@ class PostForm extends Component {
             <Grid item>
               <TextField
                 id="category"
-                select
                 required
+                select
                 label="Category"
                 className={classes.textField}
                 value={this.state.category}

@@ -1,27 +1,25 @@
 import * as Api from '../utils/api'
 
-export const RECEIVE_POST_COMMENTS = 'RECEIVE_POST_COMMENTS';
-export const RECEIVE_POST_COMMENT = 'RECEIVE_POST_COMMENT';
-export const RECEIVE_NEW_POST_COMMENT = 'RECEIVE_NEW_POST_COMMENT';
+import { RECEIVE_POST_COMMENTS, RECEIVE_POST_COMMENT, RECEIVE_NEW_POST_COMMENT } from './actionTypes';
 
 function receivePostComments(comments) {
   return {
     type: RECEIVE_POST_COMMENTS,
-    comments: comments
+    comments
   }
 }
 
 function receivePostComment(comment) {
   return {
     type: RECEIVE_POST_COMMENT,
-    comment: comment
+    comment
   }
 }
 
 function receiveNewPostComment(comment) {
   return {
     type: RECEIVE_NEW_POST_COMMENT,
-    comment: comment
+    comment
   }
 }
 

@@ -1,10 +1,7 @@
 import * as Api from '../utils/api'
 
-export const REQUEST_POSTS = 'REQUEST_POSTS';
-export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 
-export const REQUEST_POST = 'REQUEST_POST';
-export const RECEIVE_POST = 'RECEIVE_POST';
+import { REQUEST_POSTS, RECEIVE_POSTS, RECEIVE_POST } from './actionTypes';
 
 function requestPosts() {
   return {
@@ -15,7 +12,7 @@ function requestPosts() {
 function receivePosts(posts) {
   return {
     type: RECEIVE_POSTS,
-    posts: posts,
+    posts,
     receivedAt: Date.now()
   }
 }
@@ -23,7 +20,7 @@ function receivePosts(posts) {
 function receivePost(post) {
   return {
     type: RECEIVE_POST,
-    post: post,
+    post,
     receivedAt: Date.now()
   }
 }

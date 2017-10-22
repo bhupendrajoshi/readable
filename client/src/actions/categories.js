@@ -1,8 +1,6 @@
 import * as Api from '../utils/api'
 
-export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES';
-export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
-export const SET_SELECTED_CATEGORY = 'SET_SELECTED_CATEGORY';
+import { REQUEST_CATEGORIES, RECEIVE_CATEGORIES, SET_SELECTED_CATEGORY } from './actionTypes';
 
 function requestCategories() {
   return {
@@ -13,7 +11,7 @@ function requestCategories() {
 function receiveCategories(categories) {
   return {
     type: RECEIVE_CATEGORIES,
-    categories: categories,
+    categories,
     receivedAt: Date.now()
   }
 }

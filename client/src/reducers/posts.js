@@ -1,4 +1,4 @@
-import { REQUEST_POSTS, RECEIVE_POSTS, RECEIVE_POST } from '../actions/posts';
+import { REQUEST_POSTS, RECEIVE_POSTS, RECEIVE_POST } from '../actions/actionTypes';
 
 const initialPostState = {
   posts: [],

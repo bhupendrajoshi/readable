@@ -51,10 +51,8 @@ export const editPost = (post) =>
 export const deletePost = (postId) =>
   fetch(`${api}/posts/${postId}`, {
     method: "DELETE",
-    headers
+    headers: { ...headers, 'Content-Type': 'application/json' }
   })
-    .then(res => res.json())
-    .then(data => data)
 
 export const voteUpPost = (postId) =>
   fetch(`${api}/posts/${postId}`, {
@@ -118,7 +116,7 @@ export const editComment = (comment) =>
 export const deleteComment = (commentId) =>
   fetch(`${api}/comments/${commentId}`, {
     method: "DELETE",
-    headers
+    headers: { ...headers, 'Content-Type': 'application/json' }
   })
     .then(res => res.json())
     .then(data => data)
