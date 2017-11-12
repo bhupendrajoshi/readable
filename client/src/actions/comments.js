@@ -1,62 +1,63 @@
-import * as Api from '../utils/api'
+import * as Api from '../utils/api';
 
-export const RECEIVE_POST_COMMENTS = 'RECEIVE_POST_COMMENTS';
-export const RECEIVE_POST_COMMENT = 'RECEIVE_POST_COMMENT';
-export const RECEIVE_NEW_POST_COMMENT = 'RECEIVE_NEW_POST_COMMENT';
+import { RECEIVE_POST_COMMENTS, RECEIVE_POST_COMMENT, RECEIVE_NEW_POST_COMMENT } from './actionTypes';
 
-function receivePostComments(comments) {
+function receivePostComments(postId, comments) {
   return {
     type: RECEIVE_POST_COMMENTS,
-    comments: comments
-  }
+    postId,
+    comments,
+  };
 }
 
-function receivePostComment(comment) {
+function receivePostComment(postId, comment) {
   return {
     type: RECEIVE_POST_COMMENT,
-    comment: comment
-  }
+    postId,
+    comment,
+  };
 }
 
-function receiveNewPostComment(comment) {
+function receiveNewPostComment(postId, comment) {
   return {
     type: RECEIVE_NEW_POST_COMMENT,
-    comment: comment
-  }
+    postId,
+    comment,
+  };
 }
 
 export function fetchPostComments(postId) {
   return (dispatch) => {
-    Api.getPostComments(postId).then(comments => dispatch(receivePostComments(comments)));
-  }
+    Api.getPostComments(postId).then(comments => dispatch(receivePostComments(postId, comments)));
+  };
 }
 
-export function voteUpComment(commentId) {
+export function voteUpComment(postId, commentId) {
   return (dispatch) => {
-    Api.voteUpComment(commentId).then(comment => dispatch(receivePostComment(comment)));
-  }
+    Api.voteUpComment(commentId).then(comment => dispatch(receivePostComment(postId, comment)));
+  };
 }
 
-export function voteDownComment(commentId) {
+export function voteDownComment(postId, commentId) {
   return (dispatch) => {
-    Api.voteDownComment(commentId).then(comment => dispatch(receivePostComment(comment)));
-  }
+    Api.voteDownComment(commentId).then(comment => dispatch(receivePostComment(postId, comment)));
+  };
 }
 
-export function addComment(data) {
+export function addComment(postId, data) {
   return (dispatch) => {
-    Api.addComment(data).then(comment => dispatch(receiveNewPostComment(comment)));
-  }
+    Api.addComment(data).then(comment => dispatch(receiveNewPostComment(postId, comment)));
+  };
 }
 
-export function editComment(data) {
+export function editComment(postId, data) {
   return (dispatch) => {
-    Api.editComment(data).then(comment => dispatch(receivePostComment(comment)));
-  }
+    Api.editComment(data).then(comment => dispatch(receivePostComment(postId, comment)));
+  };
 }
 
-export function deleteComment(commentId) {
+export function deleteComment(postId, commentId) {
   return (dispatch) => {
-    Api.deleteComment(commentId).then(comment => dispatch(receivePostComment(comment)));
-  }
+    Api.deleteComment(commentId).then(comment => dispatch(receivePostComment(postId, comment)));
+  };
 }

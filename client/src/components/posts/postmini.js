@@ -1,50 +1,77 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Card, { CardHeader, CardActions, CardContent } from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
-import Badge from 'material-ui/Badge';
-import ThumbUp from 'material-ui-icons/ThumbUp';
-import ThumbDown from 'material-ui-icons/ThumbDown';
-import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 
 import { Link } from 'react-router';
 
 import Moment from 'react-moment';
 
-export default function PostMini({ post }) {
+import { fetchPostComments } from '../../actions/comments';
 
-  return (
-    <div>
-      <Card className="card" key={post.id}>
-        <CardHeader
-          title={post.title}
-          subheader={(<Moment format="DD MMM YYYY HH:MM:SS">
-            {post.timestamp}
-          </Moment>
-          )}
-        />
-        <CardContent>
-          <Grid container spacing={16} >
-            <Grid item xs={1}>
-              <Chip label={post.author} />
-            </Grid>
-            <Grid item xs={1}>
-              <Badge badgeContent={post.voteScore} color="accent">
-                {post.voteScore > 0 ? <ThumbUp /> : <ThumbDown />}
-              </Badge>
-            </Grid>
-          </Grid>
-        </CardContent>
-        <CardActions>
-          <Link to={`post/${post.id}`}>
-            <Button color="accent">
-              Read More
-            </Button>
+import PostActions from './postactions';
+import PostVoting from './postvoting';
+
+class PostMini extends Component {
+  componentDidMount() {
+    this.props.getPostComments(this.props.post.id);
+  }
+
+  render() {
+    const { post } = this.props;
+    return (
+      <div>
+        <Card className="card" key={post.id}>
+          <Link to={`${post.category}/post/${post.id}`}>
+            <CardHeader
+              title={post.title}
+              subheader={(<Moment format="DD MMM YYYY HH:MM:SS">
+                {post.timestamp}
+              </Moment>
+              )}
+            />
           </Link>
-        </CardActions>
-      </Card>
-
-    </div>
-  );
+          <CardContent>
+            <Grid container spacing={16} >
+              <Grid item xs={1}>
+                <Chip label={post.author} />
+              </Grid>
+            </Grid>
+            {post.comments && post.comments.length > 0 ?
+              (
+                <Grid container spacing={16} >
+                  <Grid item xs={1}>
+                    <Chip label={post.comments && post.comments.filter(c => !c.deleted).length} />
+                  </Grid>
+                  <Grid item xs={2}>
+                    <span>Comments</span>
+                  </Grid>
+                </Grid>
+              ) :
+              (
+                <Grid container spacing={16} >
+                  <Grid item xs={4}>
+                    <span>No comments</span>
+                  </Grid>
+                </Grid>
+              )}
+            <PostVoting post={post} />
+          </CardContent>
+          <CardActions>
+            <PostActions post={post} shouldGoBack={false} />
+          </CardActions>
+        </Card>
+      </div>
+    );
+  }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getPostComments: postId => dispatch(fetchPostComments(postId)),
+  };
+}
+
+export default connect(undefined, mapDispatchToProps)(PostMini);

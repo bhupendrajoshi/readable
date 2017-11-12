@@ -1,4 +1,4 @@
-import { REQUEST_CATEGORIES, RECEIVE_CATEGORIES, SET_SELECTED_CATEGORY } from '../actions/categories';
+import { REQUEST_CATEGORIES, RECEIVE_CATEGORIES, SET_SELECTED_CATEGORY } from '../actions/actionTypes';
 
 const initialCategoryState = {
   categories: [],

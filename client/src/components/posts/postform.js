@@ -38,12 +38,18 @@ class PostForm extends Component {
 
     const { post } = this.props;
 
+    let category = post && post.category ? post.category : '';
+
+    if (category === undefined || category.length === 0) {
+      category = this.props.categories[0].name;
+    }
+
     this.state = {
       id: post && post.id ? post.id : undefined,
       title: post && post.title ? post.title : '',
       author: post && post.author ? post.author : '',
       body: post && post.body ? post.body : '',
-      category: post && post.category ? post.category : ''
+      category: category
     }
   }
 
@@ -57,6 +63,10 @@ class PostForm extends Component {
     event.preventDefault();
     const id = this.state.id ? this.state.id : uniqueString();
     this.props.updatedForm({ ...this.state, id: id, timestamp: Date.now() });
+  }
+
+  isValid() {
+    return !(this.state.category === undefined || this.state.category.length === 0)
   }
 
   render() {
@@ -104,8 +114,8 @@ class PostForm extends Component {
             <Grid item>
               <TextField
                 id="category"
-                select
                 required
+                select
                 label="Category"
                 className={classes.textField}
                 value={this.state.category}
