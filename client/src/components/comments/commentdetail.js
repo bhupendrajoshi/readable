@@ -34,18 +34,18 @@ const styles = theme => ({
   },
   menu: {
     width: 200,
-  }
+  },
 });
 
 class CommentDetail extends Component {
   constructor() {
     super();
     this.state = {
-      editing: false
-    }
+      editing: false,
+    };
   }
   render() {
-    const { comment, voteUpComment, voteDownComment, editComment, deleteComment } = this.props;
+    const { post, comment, voteUpComment, voteDownComment, editComment, deleteComment } = this.props;
     return (
       <div>
 
@@ -68,12 +68,12 @@ class CommentDetail extends Component {
                     <span>{comment.voteScore}</span>
                   </Grid>
                   <Grid item xs={1}>
-                    <IconButton color="accent" onClick={() => voteUpComment(comment.id)}>
+                    <IconButton color="accent" onClick={() => voteUpComment(post.id, comment.id)}>
                       <ThumbUp />
                     </IconButton>
                   </Grid>
                   <Grid item xs={1}>
-                    <IconButton color="accent" onClick={() => voteDownComment(comment.id)}>
+                    <IconButton color="accent" onClick={() => voteDownComment(post.id, comment.id)}>
                       <ThumbDown />
                     </IconButton>
                   </Grid>
@@ -81,7 +81,7 @@ class CommentDetail extends Component {
               </CardContent>
               <CardActions>
                 <Button fab color="primary" onClick={() => this.setState({ editing: true })} ><ModeEditIcon /></Button>
-                <Button fab color="accent" onClick={() => deleteComment(comment.id)} ><DeleteIcon /></Button>
+                <Button fab color="accent" onClick={() => deleteComment(post.id, comment.id)} ><DeleteIcon /></Button>
               </CardActions>
             </Card>
 
@@ -89,8 +89,8 @@ class CommentDetail extends Component {
           : (
             <CommentForm
               comment={comment}
-              updatedComment={comment => {
-                editComment(comment);
+              updatedComment={(comment) => {
+                editComment(post.id, comment);
                 this.setState({ editing: false });
               }}
             />
@@ -102,16 +102,16 @@ class CommentDetail extends Component {
 
 
 CommentDetail.propTypes = {
-  comment: PropTypes.object.isRequired
+  comment: PropTypes.object.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    voteUpComment: (commentId) => dispatch(voteUpComment(commentId)),
-    voteDownComment: (commentId) => dispatch(voteDownComment(commentId)),
-    editComment: (comment) => dispatch(editComment(comment)),
-    deleteComment: (commentId) => dispatch(deleteComment(commentId))
-  }
+    voteUpComment: (postId, commentId) => dispatch(voteUpComment(postId, commentId)),
+    voteDownComment: (postId, commentId) => dispatch(voteDownComment(postId, commentId)),
+    editComment: (postId, comment) => dispatch(editComment(postId, comment)),
+    deleteComment: (postId, commentId) => dispatch(deleteComment(postId, commentId)),
+  };
 }
 
 export default compose(withStyles(styles), connect(undefined, mapDispatchToProps))(CommentDetail);

@@ -2,28 +2,49 @@ import React from 'react';
 
 import Divider from 'material-ui/Divider';
 
-import CommentDetail from './commentdetail';
+import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 
+import CommentDetail from './commentdetail';
 import CommentForm from './commentform';
 
-export default function Comments({ comments, addComment }) {
+export default function Comments({ post, addComment }) {
   return (
-    <div>
-      <Divider />
+    <Grid container spacing={16} direction="column">
+      <Grid item>
+        <Divider />
+      </Grid>
 
-      <Typography type="title" color="inherit" noWrap>Comments</Typography>
+      <Grid item>
+        <Typography type="title" color="inherit" noWrap>Comments</Typography>
+      </Grid >
 
-      <div>
+      <Grid item >
         <Typography type="body2" color="inherit" noWrap>New Comment</Typography>
         <CommentForm comment={undefined} updatedComment={comment => addComment(comment)} />
-      </div>
+      </Grid >
 
-      {comments && comments.length > 0
-        ? comments.map(c => (
-          <CommentDetail key={c.id} comment={c} />
-        ))
-        : ((<span>No Comments</span>))}
-    </div>
+      <Grid item>
+        <Divider />
+      </Grid >
+
+      <Grid item>
+        <Typography type="title" color="inherit" noWrap>
+          {post && post.comments && post.comments.length > 0 ?
+            (<span>{post.comments.length} Comments</span>)
+            :
+            (<span>No Comments</span>)}
+        </Typography>
+
+        {
+          post && post.comments && post.comments.length > 0 &&
+          (
+            post.comments.filter(c => !c.deleted).map(c => (
+              <CommentDetail key={c.id} post={post} comment={c} />
+            ))
+          )
+        }
+      </Grid >
+    </Grid >
   );
 }

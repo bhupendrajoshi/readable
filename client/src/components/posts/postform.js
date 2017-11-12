@@ -38,12 +38,18 @@ class PostForm extends Component {
 
     const { post } = this.props;
 
+    let category = post && post.category ? post.category : '';
+
+    if (category === undefined || category.length === 0) {
+      category = this.props.categories[0].name;
+    }
+
     this.state = {
       id: post && post.id ? post.id : undefined,
       title: post && post.title ? post.title : '',
       author: post && post.author ? post.author : '',
       body: post && post.body ? post.body : '',
-      category: post && post.category ? post.category : ''
+      category: category
     }
   }
 

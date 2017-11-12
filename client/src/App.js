@@ -34,7 +34,7 @@ const styles = theme => ({
       height: 'calc(100% - 64px)',
       marginTop: 64,
     },
-  }
+  },
 });
 
 class App extends Component {
@@ -46,7 +46,7 @@ class App extends Component {
           <AppBar className={classes.appBar}>
             <Toolbar>
               <Typography type="title" color="inherit" noWrap>
-                <Link to='/posts'>
+                <Link to="/">
                   Readable
                 </Link>
               </Typography>

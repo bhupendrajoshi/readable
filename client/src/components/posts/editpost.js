@@ -7,29 +7,34 @@ import PostForm from './postform';
 
 import { editPost } from '../../actions/posts';
 
-const EditPost = props => {
+const EditPost = (props) => {
+  const post = props.posts.find(p => p.id === props.params.id);
+
   return (
-    <PostForm post={props.post} updatedForm={data => {
-      props.editPost(data);
-      browserHistory.goBack();
-    }} />
+    <PostForm
+      post={post}
+      updatedForm={(data) => {
+        props.editPost(data);
+        browserHistory.goBack();
+      }}
+    />
   );
 };
 
 EditPost.propTypes = {
-  post: PropTypes.object.isRequired
+  posts: PropTypes.array.isRequired,
 };
 
 function mapStateToProps({ posts }) {
   return {
-    post: posts.selectedPost,
-  }
+    posts: posts.posts,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    editPost: (data) => dispatch(editPost(data))
-  }
+    editPost: data => dispatch(editPost(data)),
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditPost);
