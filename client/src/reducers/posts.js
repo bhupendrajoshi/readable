@@ -6,25 +6,28 @@ const initialPostState = {
   postsLastUpdatedAt: undefined,
 };
 
+function updatePost(oldPost, newPost) {
+  return {
+    ...oldPost,
+    timestamp: newPost.timestamp,
+    title: newPost.title,
+    body: newPost.body,
+    author: newPost.author,
+    category: newPost.category,
+    voteScore: newPost.voteScore,
+    deleted: newPost.deleted,
+  };
+}
+
 export default function posts(state = initialPostState, action) {
   switch (action.type) {
     case REQUEST_POSTS:
       return { ...state, isRequestingPosts: true };
+
     case RECEIVE_POSTS: {
       const updatedPosts = state.posts.map((p) => {
         const updatedPost = action.posts.find(ap => ap.id === p.id);
-        return updatedPost ?
-          {
-            ...p,
-            timestamp: updatedPost.timestamp,
-            title: updatedPost.title,
-            body: updatedPost.body,
-            author: updatedPost.author,
-            category: updatedPost.category,
-            voteScore: updatedPost.voteScore,
-            deleted: updatedPost.deleted,
-          } :
-          p;
+        return updatedPost ? updatePost(p, updatedPost) : p;
       });
 
       const newPosts = action.posts.filter(ap =>
@@ -37,26 +40,29 @@ export default function posts(state = initialPostState, action) {
         posts: [...updatedPosts, ...newPosts],
       };
     }
-    case RECEIVE_POST:
-      return {
-        ...state,
-        posts: state.posts.map(post => ((post.id === action.post.id) ? {
-          ...post,
-          timestamp: action.post.timestamp,
-          title: action.post.title,
-          body: action.post.body,
-          author: action.post.author,
-          category: action.post.category,
-          voteScore: action.post.voteScore,
-          deleted: action.post.deleted,
-        } : post)),
-      };
+
+    case RECEIVE_POST: {
+      if (action.post.id) {
+        const receivedPost = state.posts.find(p => p.id === action.post.id);
+        if (!receivedPost) {
+          return { ...state, posts: [...state.posts, action.post] };
+        }
+
+        return {
+          ...state,
+          posts: state.posts.map(post =>
+            ((post.id === action.post.id) ? updatePost(post, action.post) : post)),
+        };
+      }
+      return state;
+    }
     case DELETE_POST:
       return {
         ...state,
         posts: state.posts.map(post =>
           ((post.id === action.postId) ? { ...post, deleted: true } : post)),
       };
+
     case RECEIVE_POST_COMMENTS:
       return {
         ...state,
@@ -65,6 +71,7 @@ export default function posts(state = initialPostState, action) {
           comments: action.comments,
         } : post)),
       };
+
     case RECEIVE_POST_COMMENT:
       return {
         ...state,
@@ -74,6 +81,7 @@ export default function posts(state = initialPostState, action) {
             action.comment : comment)),
         } : post)),
       };
+
     case RECEIVE_NEW_POST_COMMENT:
       return {
         ...state,

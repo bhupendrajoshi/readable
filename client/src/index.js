@@ -24,10 +24,10 @@ ReactDOM.render(
       <Router history={browserHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
-          <Route path="/:categoryname" component={Home} />
-          <Route path="/:categoryname/post/:id" component={PostDetail} />
-          <Route path="/newpost" component={NewPost} />
-          <Route path="/:categoryname/editpost/:id" component={EditPost} />
+          <Route exact path="/newpost" component={NewPost} />
+          <Route exact path="/:categoryname" component={Home} />
+          <Route exact path="/:categoryname/post/:id" component={PostDetail} />
+          <Route exact path="/:categoryname/editpost/:id" component={EditPost} />
         </Route>
       </Router>
     </MuiThemeProvider>
