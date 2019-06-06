@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Route, Router, browserHistory, IndexRoute } from 'react-router';
+import { Switch, Route } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { MuiThemeProvider } from 'material-ui/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import store from './store';
 import theme from './theme';
@@ -19,19 +20,30 @@ import EditPost from './components/posts/editpost';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <MuiThemeProvider theme={theme}>
-      <Router history={browserHistory}>
-        <Route path="/" component={App}>
-          <IndexRoute component={Home} />
-          <Route exact path="/newpost" component={NewPost} />
-          <Route exact path="/:categoryname" component={Home} />
-          <Route exact path="/:categoryname/post/:id" component={PostDetail} />
-          <Route exact path="/:categoryname/editpost/:id" component={EditPost} />
-        </Route>
-      </Router>
-    </MuiThemeProvider>
-  </Provider>,
-  document.getElementById('root'));
+	<Provider store={store}>
+		<MuiThemeProvider theme={theme}>
+			<BrowserRouter>
+				<App>
+					<Switch>
+						<Route exact path="/" component={Home} />
+						<Route exact path="/newpost" component={NewPost} />
+						<Route exact path="/:categoryname" component={Home} />
+						<Route
+							exact
+							path="/:categoryname/post/:id"
+							component={PostDetail}
+						/>
+						<Route
+							exact
+							path="/:categoryname/editpost/:id"
+							component={EditPost}
+						/>
+					</Switch>
+				</App>
+			</BrowserRouter>
+		</MuiThemeProvider>
+	</Provider>,
+	document.getElementById('root')
+);
 
 registerServiceWorker();

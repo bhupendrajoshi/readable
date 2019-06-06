@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Grid from 'material-ui/Grid';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import { withStyles } from 'material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 
 import uniqueString from 'unique-string';
 
 const styles = theme => ({
 	textField: {
-		marginLeft: theme.spacing.unit,
-		marginRight: theme.spacing.unit,
+		marginLeft: theme.spacing(),
+		marginRight: theme.spacing(),
 		width: '100%'
 	},
 	multilineTextField: {
-		marginLeft: theme.spacing.unit,
-		marginRight: theme.spacing.unit,
+		marginLeft: theme.spacing(),
+		marginRight: theme.spacing(),
 		width: '100%',
 		height: '50px'
 	}
@@ -63,8 +63,8 @@ class CommentForm extends Component {
 		return (
 			<div>
 				<form onSubmit={this.handleSubmit}>
-					<Grid container spacing={16} direction="column">
-						<Grid item xs={12}>
+					<Grid container spacing={10} direction="column">
+						<Grid item xs={5}>
 							<TextField
 								id="author"
 								label="Author"
@@ -75,7 +75,7 @@ class CommentForm extends Component {
 							/>
 						</Grid>
 
-						<Grid item xs={12}>
+						<Grid item xs={5}>
 							<TextField
 								id="body"
 								label="Body"
